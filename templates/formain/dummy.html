@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Hai dummy html</h1>
+    <p>{{request.user.username}}</p></p>
+    <p>{{request.user.userMode}}</p></p>
+
+{% if user.userMode == "moderator" or user.userMode == "admin" and user.custompermission.can_edit %}
+    <a href="">Edit</a>
+
+    he can edit
+{% endif %}
+<!-- 
+color code - #69d3be -->
+
+
+
+    {% if perms.ProjApp.add%}
+    <p>Yes</p>
+    {% else %}
+    <p>no</p>
+    {% endif%}
+  </body>
+</html>

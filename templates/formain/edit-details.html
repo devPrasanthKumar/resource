@@ -1,0 +1,19 @@
+{% extends 'formain/base1.html' %} {% block content %}
+{% load crispy_forms_tags %}
+
+<form action="" method="post" class="col-lg-5 shadow p-5 offset-lg-2">
+  {% csrf_token %} {{form|crispy}}
+  <a href="{% url 'change-password' request.user.uuid %}">change password</a>
+  <button type="submit" class="btn btn-success">submit</button>
+</form>
+<div class="col-lg-5">
+  <p>
+    {% if form.errors %}
+
+    <p>{{form.errors}}</p>
+
+
+    {% endif%}
+  </p>
+</div>
+{% endblock %}

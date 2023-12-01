@@ -1,0 +1,89 @@
+{% extends 'formain/base1.html' %}
+
+{% block content %}
+  {% load static %}
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">DataTable with default features</h3>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+          <a href="{% url 'upload-data' %}" class="btn btn-primary text-light">+ add</a>
+          <table id="" class="table table-responsive  table-bordered table-striped">
+            <thead>
+              <tr>
+                <th>Telegram Name</th>
+                <th>Language</th>
+                <th>Category</th>
+                <th>Level</th>
+                <th>Channel Name</th>
+                <th>Link</th>
+                <th>Total Hits</th>
+                <th>Feedback</th>
+                <th>Ratings</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for data in showAllDetails %}
+                <tr>
+                  <td>@{{ data.telegram_name }}</td>
+                  <td>{{ data.language }}</td>
+                  <td>{{ data.category.name }}</td>
+                  <td>{{ data.level }}</td>
+                  <td>{{ data.channel_name }}</td>
+                  <td><a href="{{ data.link }}" target="_blank" class="click-link">click</a></td>
+                  <td><span id="total-hits-{{ data.pk }}">{{ data.total_hits }}</span></td>
+                  <td>{{ data.feedback }}</td>
+                  <td>{{ data.ratings }}
+                    <div class="rating-stars" data-source-id="{{ data.pk }}">
+                      <i class="star far fa-star" data-rating="1"></i>
+                      <i class="star far fa-star" data-rating="2"></i>
+                      <i class="star far fa-star" data-rating="3"></i>
+                      <i class="star far fa-star" data-rating="4"></i>
+                      <i class="star far fa-star" data-rating="5"></i>
+                    </div>
+                    <span class="average-rating" data-source-id="{{ data.pk }}">Average Rating: {{ data.ratings }}</span>
+                    <span class="total-rating-count" data-source-id="{{ data.pk }}">Total Ratings: {{ data.total_ratings }}</span>
+                    <button class="btn btn-success rate-button" data-source-id="{{ data.pk }}">Rate</button>
+                  </td>
+                  <td>
+                  {% if request.user.userMode == "admin" or request.user.userMode == "moderator" and  user.custompermission.can_edit%}
+                    <a href="{% url 'update-data' data.pk %}" class="btn btn-primary">edit</a>
+                  {% endif %}
+                  {% if request.user.userMode == "admin" or request.user.userMode == "moderator" and  user.custompermission.can_delete%}  
+                    <a href="{% url 'delete-data' data.pk %}" class="btn btn-danger">delete</a>
+                  </td>
+                  {% endif %}
+                </tr>
+              {% endfor %}
+            </tbody>
+            <tfoot>
+              <tr>
+                <th>Telegram Name</th>
+                <th>Language</th>
+                <th>Category</th>
+                <th>Level</th>
+                <th>Channel Name</th>
+                <th>Link</th>
+                <th>Total Hits</th>
+                <th>Feedback</th>
+                <th>Ratings</th>
+                <th>Actions</th>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+    </div>
+    <!-- /.col -->
+  </div>
+  <!-- /.row -->
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{% endblock %}

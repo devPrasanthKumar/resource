@@ -1,0 +1,12 @@
+{% extends 'formain/base1.html' %} {% block content %}
+<p>Are you sure, You want to delete this data</p>
+<form action="" method="post">
+  {% csrf_token %}
+  <a href="{% url 'delete-data' deletedata.pk %}">
+    <button class="btn btn-danger">delete</button>
+  </a>
+</form>
+
+<a href="{% url 'data' %}">cancel</a>
+
+{% endblock %}
